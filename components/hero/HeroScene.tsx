@@ -65,7 +65,9 @@ export function HeroScene() {
     const unsubscribe = subscribePointer((state) => {
       pointerRef.current = state;
     });
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   useFrame((_, delta) => {

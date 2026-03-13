@@ -2,8 +2,6 @@
 
 import { Suspense, useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
-import { EffectComposer, Bloom, ChromaticAberration } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 import { HeroScene } from "./HeroScene";
 
@@ -30,30 +28,6 @@ function SceneSetup() {
   return null;
 }
 
-function HeroSceneWithPost() {
-  return (
-    <>
-      <SceneSetup />
-      <HeroScene />
-      <EffectComposer enabled multisampling={4}>
-        <Bloom
-          blendFunction={BlendFunction.ADD}
-          intensity={0.4}
-          luminanceThreshold={0.2}
-          luminanceSmoothing={0.4}
-          mipmapBlur
-        />
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={[0.0008, 0.0008]}
-          radialModulation={false}
-          modulationOffset={0}
-        />
-      </EffectComposer>
-    </>
-  );
-}
-
 export function HeroCanvas() {
   return (
     <Canvas
@@ -70,7 +44,8 @@ export function HeroCanvas() {
       frameloop="always"
     >
       <Suspense fallback={null}>
-        <HeroSceneWithPost />
+        <SceneSetup />
+        <HeroScene />
       </Suspense>
     </Canvas>
   );
