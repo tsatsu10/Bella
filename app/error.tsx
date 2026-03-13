@@ -10,8 +10,9 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Optionally send error to your reporting service (e.g. Sentry) here
-    void error;
+    // Temporary: surface error details in console while debugging production crash
+    // eslint-disable-next-line no-console
+    console.error("[App error boundary]", error);
   }, [error]);
 
   return (
@@ -23,6 +24,17 @@ export default function Error({
         <p className="text-cream/60 mb-8">
           We couldn’t load the page. Please try again.
         </p>
+        {/* Temporary debug details: remove once crash is fixed */}
+        {error?.message && (
+          <p className="text-xs text-cream/40 break-words mb-4">
+            <span className="font-semibold">Error:</span> {error.message}
+          </p>
+        )}
+        {error?.digest && (
+          <p className="text-[11px] text-cream/30 mb-6">
+            <span className="font-semibold">Digest:</span> {error.digest}
+          </p>
+        )}
         <button
           type="button"
           onClick={reset}
