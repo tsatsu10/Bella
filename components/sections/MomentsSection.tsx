@@ -84,7 +84,7 @@ export function MomentsSection() {
 
       <div className="max-w-6xl mx-auto">
         {loading && (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
@@ -102,7 +102,7 @@ export function MomentsSection() {
         )}
 
         {!loading && photos.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[minmax(140px,1fr)] gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 auto-rows-[minmax(140px,1fr)] gap-4 sm:gap-6">
             {photos.map((photo, index) => {
               const variant = getArtVariant(index);
               return (
