@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens — Dribbble/Behance-inspired: minimal luxury, editorial rhythm */
+:root {
+  --background: #0a0a0a;
+  --surface: #141414;
+  --muted: #737373;
+  --accent: #d4af37;
+  --cream: #faf8f5;
+  /* Warm neutrals for understated luxury */
+  --cream-muted: rgba(250, 248, 245, 0.5);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.1);
+  /* Vertical rhythm: section spacing */
+  --section-py: 7rem;
+  --section-py-md: 10rem;
+  --section-heading-gap: 1.25rem;
+  --section-content-gap: 5rem;
+  /* Film grain intensity; adjust between 0.03 and 0.06 to taste */
+  --grain-opacity: 0.04;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--cream);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* Prevent horizontal overflow on mobile */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Safe area insets for notched devices (e.g. iPhone) */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+/* Hide default cursor when custom dot is active (desktop only) */
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
+/* Subtle film grain for premium tactility. Tweak --grain-opacity (e.g. 0.03–0.06) to taste. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: var(--grain-opacity, 0.04);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain::after {
+    opacity: 0;
+  }
+}
+
+/* Balloons: float up with gentle sway (cream/gold palette) */
+@keyframes float-up {
+  0% {
+    transform: translateY(0) translateX(0) rotate(-2deg);
+  }
+  25% {
+    transform: translateY(-30vh) translateX(10px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-60vh) translateX(-8px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-90vh) translateX(6px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(-120vh) translateX(0) rotate(-2deg);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Editorial section heading pattern: small cap label + large serif + accent line */
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+  }
+  /* Premium nav: shared transition for link underlines and hover (editorial feel) */
+  .nav-transition {
+    transition: color 0.35s ease-out, opacity 0.35s ease-out;
+  }
+  .nav-underline-transition {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Keyboard focus: visible ring only on focus-visible (not on mouse click) */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Focus visible for keyboard users; avoid focus ring when reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print: hide UI chrome, show letter and sections clearly */
+@media print {
+  .grain::after {
+    opacity: 0;
+  }
+  header,
+  [aria-label="Scroll progress"],
+  [aria-label="Jump to song and play"],
+  [role="status"][aria-label^="Now playing"],
+  .fixed.z-40,
+  .fixed.z-50,
+  [data-print-hide] {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #1a1a1a;
+  }
+  main {
+    padding-top: 0;
+  }
+  section {
+    break-inside: avoid;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  a[href^="#"] {
+    text-decoration: none;
+    color: inherit;
+  }
+}
