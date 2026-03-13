@@ -11,8 +11,6 @@ const nextConfig: NextConfig = {
   transpilePackages: [
     "@react-three/fiber",
     "@react-three/drei",
-    "@react-three/postprocessing",
-    "postprocessing",
     "three",
   ],
 };
